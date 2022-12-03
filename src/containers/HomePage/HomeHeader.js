@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 // import {withRouter} from 'react-router';
 
 class HomeHeader extends Component {
@@ -236,16 +237,40 @@ class HomeHeader extends Component {
                   }}
                 >
                   {this.state.resultSearch.map((e) => (
+                    e.address ? <div
+                      style={{ boxShadow: " 0 0 5px 2px #999", width: "100%" , display : 'flex', justifyContent : 'space-between' , alignItems : 'center', padding : '5px',borderRadius : '10px' }}
+                      key={e.id}
+                    >
+                      <div style={{width : '70%' ,display : 'flex' , flexDirection : 'column'}}>
+                        <span>{e.name}</span>
+                       
+                        {e.lastName && <span>Doctor : {e.lastName + " " +e.firstName}</span>}
+                        <span>{e.address}</span>
+                      </div>
+                      {e.lastName  ? <Link to={`/detail-doctor/${e.id}`} className="fs-5 mx-4">
+                      <Button style={{width : '100px' , height : '50px'}}>Xem Thêm</Button>
+                </Link> : <Link to={`/detail-clinic/${e.id}`} className="fs-5 mx-4">
+                      <Button style={{width : '100px' , height : '50px'}}>Xem Thêm</Button>
+                </Link>}
+                      
+                      
+                    </div> : 
                     <div
                       style={{ boxShadow: " 0 0 5px 2px #999", width: "100%" , display : 'flex', justifyContent : 'space-between' , alignItems : 'center', padding : '5px',borderRadius : '10px' }}
                       key={e.id}
                     >
                       <div style={{width : '70%' ,display : 'flex' , flexDirection : 'column'}}>
                         <span>{e.name}</span>
+                       
+                        {e.lastName && <span>Specialty : {e.lastName + " " +e.firstName}</span>}
                         <span>{e.address}</span>
                       </div>
+                      <Link to={`/detail-specialty/${e.id}`} className="fs-5 mx-4">
                       <Button style={{width : '100px' , height : '50px'}}>Xem Thêm</Button>
-                    </div>
+                </Link>
+                      
+                    </div> 
+                    
                   ))}
                 </div>
               </div>
