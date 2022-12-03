@@ -235,7 +235,7 @@ class ProductManage extends Component {
     console.log({ roleId });
     return (
       <div className="user-redux-container">
-        <div className="title">User Redux</div>
+        <div className="title">Thêm tài khoản</div>
         <div className="">{isGetGenders === true ? "Loading genders" : ""}</div>
         <div className="user-redux-body">
           <div className="container">

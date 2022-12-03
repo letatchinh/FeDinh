@@ -9,7 +9,7 @@ import HomeHeader from "../../HomePage/HomeHeader";
 import { LANGUAGES } from "../../../utils/constant";
 import DoctorSchedule from "./DoctorSchedule";
 import DoctorExtraInfor from "./DoctorExtraInfor";
-import { getCommentByUserId } from "../../../services/userService";
+// import { getCommentByUserId } from "../../../services/userService";
 
 class detailDoctor extends Component {
   constructor(props) {
@@ -32,11 +32,11 @@ class detailDoctor extends Component {
         currentDoctorId: id,
       });
 
-      getCommentByUserId(this.props.match.params.id).then((res) => {
-        this.setState({
-          commnets: res,
-        });
-      });
+      // getCommentByUserId(this.props.match.params.id).then((res) => {
+      //   this.setState({
+      //     commnets: res,
+      //   });
+      // });
 
       let res = await getDetailInforDoctor(id);
       if (res && res.errCode === 0) {
@@ -51,14 +51,12 @@ class detailDoctor extends Component {
 
   render() {
     console.log("check state: ", this.state);
-    let { language } = this.state;
+    let { language } = this.props;
     let { detailDoctor } = this.state;
     let nameVi = "",
       nameEn = "";
     if (detailDoctor && detailDoctor.positionData) {
-      // eslint-disable-next-line no-unused-vars
       nameVi = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`;
-      // eslint-disable-next-line no-unused-vars
       nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`;
     }
 

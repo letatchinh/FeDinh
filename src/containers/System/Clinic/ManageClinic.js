@@ -73,7 +73,7 @@ class ManageClinic extends Component {
         <div className="ms-title">Quản lý Phòng khám</div>
 
         <div className="add-new-specialty row">
-          <div className="col-6 form-group">
+          <div className="col-6 form-group" style={{ paddingBottom: "10px" }}>
             <label>Tên phòng khám</label>
             <input
               className="form-control"
@@ -83,7 +83,7 @@ class ManageClinic extends Component {
             />
           </div>
           <div className="col-6 form-group">
-            <label>Ảnh phòng khám</label>
+            <label>Ảnh phòng khám</label> &nbsp;
             <input
               className="form-control-file"
               type="file"
@@ -91,7 +91,7 @@ class ManageClinic extends Component {
               onChange={(event) => this.handleOnchangeImage(event)}
             />
           </div>
-          <div className="col-6 form-group">
+          <div className="col-6 form-group" style={{ paddingBottom: "10px" }}>
             <label>Địa chỉ phòng khám</label>
             <input
               className="form-control"

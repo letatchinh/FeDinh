@@ -127,7 +127,7 @@ class ManagePatient extends Component {
           <div className="manage-patient-container">
             <div className="m-p-title">Quản lý bệnh nhân khám bệnh</div>
             <div className="manage-patient-body row">
-              <div className="col-4 form-group">
+              <div className="col-4 form-group mb-3">
                 <label>Chọn ngày khám</label>
                 <DatePicker
                   onChange={this.handleOnchangeDataPicker}
@@ -137,7 +137,7 @@ class ManagePatient extends Component {
               </div>
               <div className="col-12 table-manage-patient">
                 <table style={{ width: "100%" }}>
-                  <tbody>
+                  <tbody className="text-center">
                     <tr>
                       <th>STT</th>
                       <th>Thời gian</th>

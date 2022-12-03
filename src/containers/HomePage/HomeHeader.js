@@ -11,16 +11,35 @@ import ModalCard from "../../components/ModalCard";
 import { getAllClinic, getAllSpecialty } from "../../services/userService";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import axios from "axios";
+import { Button } from "react-bootstrap";
 // import {withRouter} from 'react-router';
 
 class HomeHeader extends Component {
   constructor(props) {
     super(props);
-    this.state = { show: false, data: [], title: "Doctors" };
+    this.state = {
+      show: false,
+      data: [],
+      title: "Doctors",
+      textSearch: "",
+      resultSearch: [],
+    };
+    this.handleChange = this.handleChange.bind(this);
   }
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
+  async handleChange(event) {
+    this.setState({ ...this.state, textSearch: event.target.value });
+    axios
+      .get(
+        `http://localhost:6969/api/get-clinic-by-name?name=${this.state.textSearch}`
+      )
+      .then((res) =>
+        this.setState({ ...this.state, resultSearch: res.data.data })
+      );
+  }
 
   returnToHome = () => {
     if (this.props.history) {
@@ -77,7 +96,8 @@ class HomeHeader extends Component {
     let language = this.props.language;
     const { show, data, title } = this.state;
 
-    console.log({ title });
+    console.log(this.state.resultSearch);
+    console.log(this.state.textSearch);
     return (
       <React.Fragment>
         <ModalCard
@@ -91,10 +111,11 @@ class HomeHeader extends Component {
         <div className="home-header-container">
           <div className="home-header-content">
             <div className="left-content">
-              <i className="fas fa-bars"></i>
-              <div className="header-logo" onClick={() => this.returnToHome()}>
-                LOGO
-              </div>
+              <i
+                className="fas fa-bars"
+                onClick={() => this.returnToHome()}
+              ></i>
+              <div className="header-logo">LOGO</div>
             </div>
 
             <div className="center-content">
@@ -193,9 +214,40 @@ class HomeHeader extends Component {
               <div className="title2">
                 <FormattedMessage id="banner.title2" />
               </div>
-              <div className="search">
+              <div className="search" style={{ position: "relative" }}>
                 <i className="fas fa-search"></i>
-                <input type="text" placeholder="Tìm phòng khám" />
+                <input
+                  type="text"
+                  value={this.state.textSearch}
+                  onChange={this.handleChange}
+                  placeholder="Tìm phòng khám"
+                />
+                <div
+                  style={{
+                    display : this.state.textSearch.length === 0 ? 'none' : 'flex',
+                    alignItems: "center",
+                    flexDirection: "column",
+                    gap: "5px",
+                    position: "absolute",
+                    top: "100%",
+                    left: 0,
+                    right: 0,
+                    background: "white",
+                  }}
+                >
+                  {this.state.resultSearch.map((e) => (
+                    <div
+                      style={{ boxShadow: " 0 0 5px 2px #999", width: "100%" , display : 'flex', justifyContent : 'space-between' , alignItems : 'center', padding : '5px',borderRadius : '10px' }}
+                      key={e.id}
+                    >
+                      <div style={{width : '70%' ,display : 'flex' , flexDirection : 'column'}}>
+                        <span>{e.name}</span>
+                        <span>{e.address}</span>
+                      </div>
+                      <Button style={{width : '100px' , height : '50px'}}>Xem Thêm</Button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="content-down">

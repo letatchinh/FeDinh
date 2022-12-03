@@ -1,7 +1,7 @@
 import { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
-import { path } from "../utils/constant";
+// import { path } from "../utils/constant";
 
 class ModalCard extends Component {
   constructor(props) {

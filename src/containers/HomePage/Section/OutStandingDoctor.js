@@ -5,7 +5,6 @@ import Slider from "react-slick";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils/constant";
 import { withRouter } from "react-router";
-import { logger } from "redux-logger";
 
 class OutStandingDoctor extends Component {
   constructor(props) {

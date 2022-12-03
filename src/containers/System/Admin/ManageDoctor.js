@@ -346,7 +346,7 @@ class ManageDoctor extends Component {
           </div>
         </div>
         <div className="more-infor-extra row">
-          <div className="col-4 form-group">
+          <div className="col-4 form-group mb-2">
             <label>
               <FormattedMessage id="admin.manage-doctor.price" />
             </label>
@@ -386,7 +386,7 @@ class ManageDoctor extends Component {
               }
             />
           </div>
-          <div className="col-4 form-group">
+          <div className="col-4 form-group mb-2">
             <label>
               <FormattedMessage id="admin.manage-doctor.nameClinic" />
             </label>
@@ -396,7 +396,7 @@ class ManageDoctor extends Component {
               value={this.state.nameClinic}
             />
           </div>
-          <div className="col-4 form-group">
+          <div className="col-4 form-group" style={{ paddingBottom: "10px" }}>
             <label>
               <FormattedMessage id="admin.manage-doctor.addressClinic" />
             </label>
@@ -420,7 +420,7 @@ class ManageDoctor extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-4 form-group">
+          <div className="col-4 form-group mb-4">
             <label>
               <FormattedMessage id="admin.manage-doctor.specialty" />
             </label>
