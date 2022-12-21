@@ -10,6 +10,7 @@ class ModalCard extends Component {
   }
   render() {
     const { show, setShow, data, title } = this.props;
+    console.log(data);
     return (
       <Modal show={show} fullscreen={true} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
@@ -35,7 +36,7 @@ class ModalCard extends Component {
                   }}
                   alt=""
                 />
-                <Link to={`${x.to}/${x.id}`} className="fs-5 mx-4">
+                <Link onClick={() => setShow(false)} to={`${x.to}/${x.id}`} className="fs-5 mx-4">
                   {x.title}{" "}
                 </Link>
                 <span>{x.desc}</span>

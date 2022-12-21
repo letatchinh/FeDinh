@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   createComment,
+  getCommentByUserId,
   getDetailInforDoctor,
 } from "../../../services/userService";
 import "./DetailDoctor.scss";
@@ -32,11 +33,11 @@ class detailDoctor extends Component {
         currentDoctorId: id,
       });
 
-      // getCommentByUserId(this.props.match.params.id).then((res) => {
-      //   this.setState({
-      //     commnets: res,
-      //   });
-      // });
+      getCommentByUserId(this.props.match.params.id).then((res) => {
+        this.setState({
+          commnets: res,
+        });
+      });
 
       let res = await getDetailInforDoctor(id);
       if (res && res.errCode === 0) {
@@ -47,12 +48,39 @@ class detailDoctor extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {}
+async  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(this.props.match.params.id !== prevProps.match.params.id){
+      let id = this.props.match.params.id;
+      this.setState({
+        currentDoctorId: id,
+      });
+
+      getCommentByUserId(this.props.match.params.id).then((res) => {
+        this.setState({
+          commnets: res,
+        });
+      });
+
+      let res = await getDetailInforDoctor(id);
+      if (res && res.errCode === 0) {
+        this.setState({
+          detailDoctor: res.data,
+        });
+      }
+    }
+  }
 
   render() {
     console.log("check state: ", this.state);
     let { language } = this.props;
     let { detailDoctor } = this.state;
+    let d = detailDoctor
+    console.log(d,"d");
+    // if (this.props.match && this.props.match.params.id) {
+    //   let id = this.props.match.params.id;
+    //   this.setState({
+    //     currentDoctorId: id,
+    //   });
     let nameVi = "",
       nameEn = "";
     if (detailDoctor && detailDoctor.positionData) {
@@ -121,7 +149,7 @@ class detailDoctor extends Component {
           </div>
           <div className="container comment-doctor">
             <h3 className="p-3">Comments</h3>
-            {this.state.commnets.map((x) => (
+            {this.state.commnets && this.state.commnets.map((x) => (
               <div className="alert alert-primary" key={x.id} role="alert">
                 <h5>name: {x.name}</h5>
                 {x.text}

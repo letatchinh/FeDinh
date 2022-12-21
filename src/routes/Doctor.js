@@ -4,6 +4,7 @@ import Header from "../containers/Header/Header";
 import { Route, Switch } from "react-router";
 import ManageSchedule from "../containers/System/doctor/ManageSchedule";
 import ManagePatient from "../containers/System/doctor/ManagePatient";
+import ChartDoctor from "../containers/System/doctor/ChartDoctor";
 
 class Doctor extends Component {
   render() {
@@ -19,6 +20,7 @@ class Doctor extends Component {
                 component={ManageSchedule}
               />
               <Route path="/doctor/manage-patient" component={ManagePatient} />
+              <Route path="/doctor/chart" component={ChartDoctor} />
             </Switch>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import "./ManagePatient.scss";
 import DatePicker from "../../../components/Input/DatePicker";
 import {
+  deleteBooking,
   getAllPatientForDoctor,
   postSendRemedy,
 } from "../../../services/userService";
@@ -11,7 +12,8 @@ import RemedyModal from "./RemedyModal";
 import LoadingOverlay from "react-loading-overlay";
 import { toast } from "react-toastify";
 import { LANGUAGES } from "../../../utils";
-
+import axios from 'axios'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 class ManagePatient extends Component {
   constructor(props) {
     super(props);
@@ -21,13 +23,21 @@ class ManagePatient extends Component {
       isOpenRemedyModal: false,
       dataModal: {},
       isShowLoading: false,
+      status : false,
+      modal: false
     };
+    this.toggle = this.toggle.bind(this);
   }
 
   async componentDidMount() {
     this.getDataPatient();
+  } 
+  toggle() {
+    console.log("ok");
+    this.setState({
+      modal: !this.state.modal
+    });
   }
-
   getDataPatient = async () => {
     let { user } = this.props;
     let { currentDate } = this.state;
@@ -79,7 +89,14 @@ class ManagePatient extends Component {
       dataModal: {},
     });
   };
-
+  deleteBooking = async(id) => {
+    // eslint-disable-next-line no-restricted-globals
+        await deleteBooking(id)
+      this.getDataPatient()
+      this.setState({status : !this.state.status})
+      this.toggle() 
+   
+       }
   sendRemedy = async (dataChild) => {
     let { dataModal } = this.state;
     this.setState({
@@ -116,6 +133,7 @@ class ManagePatient extends Component {
   render() {
     let { dataPatient, isOpenRemedyModal, dataModal } = this.state;
     let { language } = this.props;
+    console.log(dataPatient);
     // console.log("check data: ", this.state);
     return (
       <>
@@ -143,6 +161,7 @@ class ManagePatient extends Component {
                       <th>Thời gian</th>
                       <th>Họ và tên</th>
                       <th>Địa chỉ</th>
+                      <th>Số điện thoại</th>
                       <th>Giới tính</th>
                       <th>Actions</th>
                     </tr>
@@ -164,6 +183,7 @@ class ManagePatient extends Component {
                             <td>{time}</td>
                             <td>{item.patientData.firstName}</td>
                             <td>{item.patientData.address}</td>
+                            <td>{item.patientData.phonenumber}</td>
                             <td>{gender}</td>
                             <td>
                               <button
@@ -172,6 +192,21 @@ class ManagePatient extends Component {
                               >
                                 Xác nhận
                               </button>
+                              <button
+                                className="mp-btn-confirm"
+                                onClick={this.toggle}
+                              >
+                                Huỷ
+                              </button>
+                              <Modal style={{width : '200px'}} isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+          <ModalBody style={{textAlign : 'center'}}>
+           Xác Nhận xoá
+          </ModalBody>
+          <ModalFooter style={{justifyContent : 'center'}}>
+            <Button color="primary" onClick={() => {this.deleteBooking(item.id)}}>Ok</Button>{' '}
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
                               {/* <button
                                 className="mp-btn-remedy"
                                 onClick={() => this.handleBtnRemedy()}

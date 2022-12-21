@@ -13,7 +13,9 @@ const createNewUserService = (data) => {
   // console.log('check data from service: ', data)
   return axios.post("/api/create-new-user", data);
 };
-
+const deleteBooking = (id) => {
+  return axios.delete(`/api/deleteBooking/${id}`);
+}
 const deleteUserService = (userId) => {
   return axios.delete("/api/delete-user", {
     data: { id: userId },
@@ -27,6 +29,9 @@ const editUserService = (inputData) => {
 
 const getAllCodeService = (inputType) => {
   return axios.get(`/api/allcode?type=${inputType}`);
+};
+const getAllCodeServicePrice = (inputType) => {
+  return axios.post(`/api/allCode2`,inputType);
 };
 
 const getTopDoctorHomeService = (limit) => {
@@ -52,6 +57,11 @@ const saveBulkScheduleDoctor = (data) => {
 const getScheduleDoctorByDate = (doctorId, date) => {
   return axios.get(
     `/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`
+  );
+};
+const deleteScheduleDoctorByDate = (doctorId, date) => {
+  return axios.delete(
+    `/api/delete-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`
   );
 };
 
@@ -106,13 +116,16 @@ const getAllPatientForDoctor = (data) => {
 const postSendRemedy = (data) => {
   return axios.post(`/api/send-remedy`, data);
 };
+const s3 = () => {
+  return axios.get(`/api/get-list-patient-for-doctor-s3`);
+};
 
-// const getCommentByUserId = (id) => {
-//   return axios.get(`/api/get-comment-by-userId?userId=${id}`);
-// };
+const getCommentByUserId = (id) => {
+  return axios.get(`/api/getCommentById?userId=${id}`);
+};
 
 const createComment = ({ userId, text, name }) => {
-  return axios.post(`/api/create-new-comment`, { userId, text, name });
+  return axios.post(`/api/createComment`, { userId, text, name });
 };
 export {
   handleLoginAPI,
@@ -139,6 +152,10 @@ export {
   getDetailClinicById,
   getAllPatientForDoctor,
   postSendRemedy,
-  // getCommentByUserId,
+  getCommentByUserId,
   createComment,
+  deleteBooking,
+  s3,
+  getAllCodeServicePrice,
+  deleteScheduleDoctorByDate
 };

@@ -46,6 +46,7 @@ class Login extends Component {
         })
 
         try{
+            const {navigate} = this.props
             let data = await handleLoginAPI(this.state.username, this.state.password)
             if(data && data.errCode !== 0){
                 this.setState({
@@ -55,6 +56,12 @@ class Login extends Component {
 
             if(data && data.errCode === 0){
                 this.props.userLoginSuccess(data.user)
+                if(data.user.roleId === "R1"){
+                    navigate("/system/user-manage")
+                }
+                else{
+                    navigate("/doctor/manage-schedule")
+                }
                 console.log('login succeeds')
             }
         }catch(error){

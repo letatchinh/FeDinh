@@ -5,25 +5,37 @@ import Slider from "react-slick";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils/constant";
 import { withRouter } from "react-router";
+import { getAllSpecialty } from "../../../services/userService";
 
 class OutStandingDoctor extends Component {
   constructor(props) {
     super(props);
     this.state = {
       arrDoctors: [],
+
     };
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.topDoctorsRedux !== this.props.topDoctorsRedux) {
+      getAllSpecialty().then(res => {
+        // console.log(res.data,"res",this.props.topDoctorsRedux);
+        const news = this.props.topDoctorsRedux.map(e => {
+         const c =  res.data.filter(f => f.id === e.Doctor_Infor.specialtyId)
+         console.log(c,"c");
+         return {...e,nameSpe : c[0].name}
+      })
       this.setState({
-        arrDoctors: this.props.topDoctorsRedux,
+        arrDoctors: news,
       });
+      })
+      
     }
   }
 
   componentDidMount() {
     this.props.loadTopDoctors();
+    // getAllSpecialty().then(res => console.log(res,"ress",this.props.topDoctorsRedux))
   }
 
   handleViewDetailDoctor = (doctor) => {
@@ -36,7 +48,7 @@ class OutStandingDoctor extends Component {
   render() {
     let arrDoctors = this.state.arrDoctors;
     let { language, allDoctors } = this.props;
-    console.log({ allDoctors });
+    console.log("allDoctors",arrDoctors);
     arrDoctors = arrDoctors.concat(arrDoctors).concat(arrDoctors);
     console.log("check topdoctor: ", this.props.topDoctorsRedux);
     return (
@@ -81,7 +93,7 @@ class OutStandingDoctor extends Component {
                           <div>
                             {language === LANGUAGES.VI ? nameVi : nameEn}
                           </div>
-                          <div>Cơ Xương khớp</div>
+                          <div>{item.nameSpe}</div>
                         </div>
                       </div>
                     </div>

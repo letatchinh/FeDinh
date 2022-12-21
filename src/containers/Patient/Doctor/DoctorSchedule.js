@@ -76,6 +76,7 @@ class DoctorSchedule extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log("ok");
     if (this.props.language !== prevProps.language) {
       let allDays = this.getArrDays(this.props.language);
       this.setState({
@@ -132,6 +133,7 @@ class DoctorSchedule extends Component {
       dataScheduleTimeModal,
     } = this.state;
     let { language } = this.props;
+    console.log(this.props);
     return (
       <>
         <div className="doctor-schedule-container">

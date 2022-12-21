@@ -8,7 +8,7 @@ import { changeLanguageApp } from "../../store/actions/appActions";
 // import Modal from "react-bootstrap/Modal";
 import ModalCard from "../../components/ModalCard";
 // import axios from "axios";
-import { getAllClinic, getAllSpecialty } from "../../services/userService";
+import { getAllClinic, getAllDoctors, getAllSpecialty } from "../../services/userService";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
@@ -86,7 +86,24 @@ class HomeHeader extends Component {
         });
         break;
       }
+      case "BACSI": {
+        const res = await getAllDoctors();
+        console.log(res);
+        const data = res.data.map((x) => ({
+          title: x.lastName + " " + x.firstName,
+          img: x.image,
+          id: x.id,
+          to: "/detail-doctor",
+        }));
 
+        this.setState({
+          ...this.state,
+          title: "Bác sĩ",
+          show: true,
+          data,
+        });
+        break;
+      }
       default: {
         break;
       }
@@ -96,9 +113,6 @@ class HomeHeader extends Component {
   render() {
     let language = this.props.language;
     const { show, data, title } = this.state;
-
-    console.log(this.state.resultSearch);
-    console.log(this.state.textSearch);
     return (
       <React.Fragment>
         <ModalCard
@@ -116,7 +130,12 @@ class HomeHeader extends Component {
                 className="fas fa-bars"
                 onClick={() => this.returnToHome()}
               ></i>
-              <div className="header-logo">LOGO</div>
+              <div className="header-logo" onClick={this.returnToHome}>
+              <Link to={`/home`} >
+                <img style={{width : '50px' , height : '50px' , objectFit : 'cover'}} src="https://png.pngtree.com/png-clipart/20190619/original/pngtree-vector-doctor-icon-png-image_3995116.jpg" alt="logo"/>
+                 
+                </Link>
+              </div>
             </div>
 
             <div className="center-content">
@@ -146,7 +165,7 @@ class HomeHeader extends Component {
                   <FormattedMessage id="homeheader.select-room" />
                 </div>
               </div>
-              <div className="child-content">
+              <div className="child-content"  onClick={() => this.handleData("BACSI")}>
                 <div>
                   <b>
                     <FormattedMessage id="homeheader.doctor" />
@@ -234,6 +253,8 @@ class HomeHeader extends Component {
                     left: 0,
                     right: 0,
                     background: "white",
+                    maxHeight : '20rem',
+                    overflowY : 'scroll'
                   }}
                 >
                   {this.state.resultSearch.map((e) => (

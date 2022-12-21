@@ -7,6 +7,8 @@ import Header from "../containers/Header/Header";
 import ManageDoctor from "../containers/System/Admin/ManageDoctor";
 import ManageSpecialty from "../containers/System/Specialty/ManageSpecialty";
 import ManageClinic from "../containers/System/Clinic/ManageClinic";
+import EditSpeciality from "../containers/System/Specialty/EditSpeciality";
+import EditClinic from "../containers/System/Specialty/EditClinic";
 
 class System extends Component {
   render() {
@@ -24,7 +26,12 @@ class System extends Component {
                 path="/system/manage-specialty"
                 component={ManageSpecialty}
               />
+              <Route
+                path="/system/edit-specialty"
+                component={EditSpeciality}
+              />
               <Route path="/system/manage-clinic" component={ManageClinic} />
+              <Route path="/system/Edit-clinic" component={EditClinic} />
 
               <Route
                 component={() => {
